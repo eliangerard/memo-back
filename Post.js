@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     caption: {
         type: String,
-        required: true
     },
     emotion: {
         type: [String],
@@ -11,7 +10,6 @@ const postSchema = new mongoose.Schema({
     },
     file: {
         type: String,
-        required: true
     },
     taken_at: {
         type: Date,
