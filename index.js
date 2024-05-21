@@ -81,7 +81,7 @@ app.post('/post', async (req, res) => {
 
     const savedPost = await post.save();
 
-    res.json(savedPost);
+    res.json(savedPost.reverse());
 });
 
 app.listen(process.env.PORT || 3000, () => {
