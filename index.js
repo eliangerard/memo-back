@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const Post = require('./Post');
 
-mongoose.connect(process.env.MONGO_URI) .then(() => { console.log('Connected to MongoDB'); }) .catch((error) => { console.error('Failed to connect to MongoDB:', error); });
+mongoose.connect(process.env.MONGO_URI).then(() => { console.log('Connected to MongoDB'); }).catch((error) => { console.error('Failed to connect to MongoDB:', error); });
 
 const app = express();
 app.use(cors());
@@ -14,9 +14,16 @@ app.use(express.json({ limit: '100mb' }));
 app.get('/feeds', async (req, res) => {
 
     const posts = await Post.find();
+    const loweredPosts = posts.map(post => (
+        {
+            caption: post.caption,
+            emotion: post.emotion.map(emotion => emotion.toLowerCase()),
+            file: post.file
+        }
+    ));
 
     console.log(posts);
-    res.json({posts});
+    res.json({ loweredPosts });
 
     /*
     const { next } = req.query;
@@ -81,7 +88,7 @@ app.post('/post', async (req, res) => {
 
     const savedPost = await post.save();
 
-    res.json(savedPost.reverse());
+    res.json(savedPost);
 });
 
 app.listen(process.env.PORT || 3000, () => {
