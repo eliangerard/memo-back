@@ -23,7 +23,7 @@ app.get('/feeds', async (req, res) => {
     ));
 
     console.log(posts);
-    res.json({ loweredPosts });
+    res.json({ posts: loweredPosts });
 
     /*
     const { next } = req.query;
